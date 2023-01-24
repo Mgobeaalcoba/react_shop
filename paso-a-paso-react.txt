@@ -1,0 +1,155 @@
+React es…
+Te dejo el Link de la documentación que será de gran ayuda a lo largo del curso ¡Quiero ir a la Documentación!
+
+Declarativo
+React te ayuda a crear interfaces de usuario interactivas de forma sencilla. Diseña vistas simples para cada estado en tu aplicación, y React se encargará de actualizar y renderizar de manera eficiente los componentes correctos cuando los datos cambien.
+Las vistas declarativas hacen que tu código sea más predecible, por lo tanto, fácil de depurar.
+
+Basado en Componentes
+Crea componentes encapsulados que manejen su propio estado, y conviértelos en interfaces de usuario complejas.
+
+Ya que la lógica de los componentes está escrita en JavaScript y no en plantillas, puedes pasar datos de forma sencilla a través de tu aplicación y mantener el estado fuera del DOM.
+Aprende una vez, escríbelo donde sea
+En React no dejamos fuera al resto de tus herramientas tecnológicas, así que podrás desarrollar nuevas características sin necesidad de volver a escribir el código existente.
+
+React puede también renderizar desde el servidor usando Node, así como potencializar aplicaciones móviles usando React Native.
+
+—------------------------------------------------------------------------------------------------------------------
+
+Apuntes
+
+JSX se refiera a Javascript XML. Nos permite escribir html dentro de Javascript. React no requiere usar JSX, sin embargo la lógica detrás de los componentes, promueven el uso del mismo, porque usamos unidades lógicas centralizadas. En cambio, si tuviéramos diferentes archivos para separar el html y el JS, se perdería la utilidad.
+
+Virtual DOM es un concepto precioso de React. El virtual DOM es una copia en memoria del DOM normal del navegador. Pero ¿por qué hacer una copia? Bueno, cuando el UI cambia de estado, normalmente el DOM es muy lento. Sin embargo, virtual DOM es extremadamente rápido. Lo que ocurre es que primero, todo se computa en el virtual DOM, se actualiza por completo el virtual DOM (a pesar de que se re-renderiza el virtual DOM, no afecta el rendimiento porque primero no se tiene que mostrar gráficamente y realmente es muy rápido) y realiza el proceso de diff que compara ambos DOM para después igualar o “reconciliar” ambos UI y cambiar el aspecto de la manera más corta y rápida posible.
+
+Ciclo de vida se refiere al proceso de cuando los componentes son creados, actualizados y eliminados. O de otra manera ⇒ nacen, crecen y mueren.
+
+Estado son los datos que están dentro del componente. Estos pueden ser actualizados usando diferentes métodos. Los estados son muy importantes en React, pues son encargados de actualizarse cada vez que se cambian, afectando a los demás nodos del virtual DOM.
+
+Eventos los componentes, pueden configurarse con eventos como onclick para responder antes ciertas interacciones con el usuario, tal como los haríamos en Html
+
+React Hooks es otra manera de escribir los componentes con estado, si usar clases. No se pretenden reemplazar, sin embargo, usar funciones para los componentes pueden facilitar el entendimiento de la aplicación.
+
+—----------------------------------------------------------------------------------------------------------------------
+
+.
+¿Qué es el estado en React.js?
+El lugar donde almacenamos y actualizamos dinámicamente información de los usuarios y la aplicación.
+REPASAR CLASE
+2.
+¿Por qué React.js trabaja con el Virtual DOM?
+Porque es una copia del DOM real con la que puede hacer cálculos y comparaciones más rápido.
+3.
+¿Por qué React.js recomienda usar JSX?
+Porque es una sintaxis que combina JavaScript con XML, agiliza nuestro desarrollo y mejora la legibilidad de nuestro código.
+REPASAR CLASE
+4.
+Al desarrollar el frontend de una aplicación podemos aplicar el patrón MVC o Modelo, Vista, Controlador. ¿De cuál capa / letra se encarga React.js?
+Vista
+
+—------------------------------------------------------------------------------------------------------------------------
+
+Recordemos que React es una biblioteca de código abierto de JavaScript para front-end que genera interfaces de usuario con distintos componentes. Funciona sobre un DOM, es decir, un React DOM (Document Object Model) que es una interfaz independiente de varios idiomas de programación donde se pueden aplicar la estructura y el contenido de una plataforma.
+Pasos para instalar React y React DOM
+A continuación conocerás los pasos para iniciar tu proyecto en React y crear distintos componentes de UI.
+1. Crea la carpeta de trabajo
+Vas a comenzar generando la carpeta de tu proyecto y puedes lograrlo de dos maneras, con el comando “MKdir” desde la consola al generarla en un entorno visual o puedes activar desde Visual Code la consola con los comandos (Ctrl+shift+ñ) para acceder al proyecto.
+mkdir react-shop
+cd react-shop
+
+2. Asegura la inicialización del proyecto
+Inicializa repo - git init de la siguiente manera: npm init y configura el proyecto.
+git init
+npm init
+// colocamos datos relevantes al momento de inicializar con git
+// name: react-shop
+// description: react-eshop
+// entry point: src/index.js
+// author: nombre 
+// license: MIT 
+
+3. Instala dependencias
+En este punto es crucial que instales las dependencias del proyecto de React.
+npm intall react react-dom
+// luego, abrir el proyecto en vscode
+
+4. Genera la estructura de carpetas del proyecto
+Ahora crea la Carpeta SRC donde se creará el código, también crea la carpeta “public” donde se almacenarán los archivos públicos y luego dentro de public y scr crea index.js.
+Dentro de components crea el archivo App.jsx
+mkdir public
+cd public 
+touch index.html
+cd ..
+mkdir src
+cd src
+touch index.js
+mkdir components
+cd components
+touch App.jsx
+
+5. Importa el react y crea los componentes básicos
+// en index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(, document.getElementById('app')); 
+
+// en App.jsx
+import React from 'react';
+
+const App = () => {
+    return (
+       
+Hola Mundo!
+
+    );
+}
+
+export default App;
+
+-------------------------------------------------------
+
+Con el comendo: 
+npx create-react-app  nombre_proyecto
+React te crea ya todo un modelo prearmado de proyecto react para comenzar a trabajar. Está genial. 
+
+Estructura base de un proyecto React.JS
+Instalación de React y React Dom
+En el cmd
+Crear carpeta con mkdir
+Ingresar a la carpeta
+Inicializar repo - git init
+npm init y configurar el proyecto
+Instalamos las dependencias
+npm install react react-dom
+code - Abrir VSCODE
+Creamos Carpeta SRC (se creará el codigo)
+Creamos Carpeta public (archivos públicos)
+Dentro de public y de src creamos index.js
+Dentro src creamos carpeta componentes
+Dentro de components creamos archivos App.jsx
+En el archivo App.jsx
+import React from 'react'
+const App = () => {
+    return(
+	<h1> Hola Mundo </h1>
+    );
+}
+export default App;
+En el archivo index.js de la carpeta src
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+ReactDOM.render(<App />, document.getElementById(app))
+
+-------------------------------------------------------
+
+Instalando la extensión Reactjs code snippets:
+
+La configuración basica de App.js tiene de shorcut 
+
+rsc = react stateless component
+
+Solo restaría dar nuestro formato HTML dentro de la estructura de App.jsx: dentro del <div></div>
+
+
