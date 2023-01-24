@@ -152,4 +152,276 @@ rsc = react stateless component
 
 Solo restaría dar nuestro formato HTML dentro de la estructura de App.jsx: dentro del <div></div>
 
+-------------------------------------------------------
+
+Instalamos webpack para el bundle de la app, y babel para que el código sirva en cualquier navegador
+
+npm install @babel/core @babel/preset-env @babel/preset-react 
+npm install webpack webpack-cli webpack-dev-server 
+npm install babel-loader html-loader html-webpack-plugin
+Es buena práctica al momento de trabajar con npm, añadir el flag "-D" como dependencia de desarrollo
+
+babel core ⇒ núcleo de babel
+
+babel/preset-env ⇒ para que javascript y las nuevas funcionalidades funcionen en cualquier navegador
+
+babel/preset-react ⇒ para que react funcione en cualquier navegador
+
+webpack y webpack-cli ⇒ bundler del proyecto
+
+webpack-dev-server ⇒ inicializar un servidor en local para mostrar en modo producción o desarrollo nuestra aplicación
+
+loaders y plugin ⇒ sirven para optimizar o extraer html de los archivos (i.e React)
+
+Archivos de configuración
+
+node_modules
+// .gitignore
+{
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ]
+}
+//.babelrc
+const path = require('path'); //path del proyecto principal
+const HtmlWebpackPlugin = require('html-webpack-plugin'); //traemos el plugin
+//de html
+
+module.exports = {
+    entry: './src/index.js', // punto de entrada
+    output: { // lugar al que saldrán todos los archivos
+        path: path.resolve(__dirname, 'dist'), //en nuestro path, crea la carpeta dist
+        filename: 'bundle.js' // nombre del archivo js resultante
+    },
+    resolve: { // extensión de archivos a tomar en cuenta
+        extensions: ['.js', '.jsx']
+    },
+    module: { // loaders para cada tipo de archivo
+        rules: [ // reglas para usar
+            {
+                test: /\.(js|jsx)$/, // extensiones en las cuales actuará babel
+                exclude: /node_modules/, // siempre excluir node modules 
+                use: { // indicamos el loader
+                    loader: 'babel-loader' // babel 
+                }
+            },
+            {
+                test: /\.html$/, // extensiones html
+                use: [
+                    {
+                        loader: 'html-loader' // loader a usar
+                    }
+                ]
+            }
+        ]
+    },
+    plugins: [ // plugins 
+        new HtmlWebpackPlugin({ // instanciamos el plugin para html 
+            template: './public/index.html', // archivo raíz a transformar
+            filename: './index.html' // el archivo resultante
+        })
+    ]
+}
+
+-------------------------------------------------------
+
+Packages a installar antes de arrancar: 
+
+λ npm install @babel/core @babel/preset-env @babel/preset-react
+
+Paquetes de babel para que nuestro proyecto sea comprensible en multiples navegadores
+
+λ npm install webpack webpack-cli webpack-dev-server
+
+Paquetes de webpack para compilar, probar en ambiente de test y ejecutar comandos de webpack por consola
+
+λ npm install babel-loader html-loader html-webpack-plugin
+
+paquetes de plugins y loader.
+
+Luego: 
+
+2- Creo archivos necesarios: 
+A- .babelrc
+Config de .babelrc:
+
+{
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ]
+}
+
+B- Creo mi file webpack.config.js:
+Config inicial de mi webpack.config: 
+
+const path = require('path'); // Nos permite saber donde se está inicializando nuestro proyecto. En nuestra compu, en nuestra notebook, en la compu de un amigo, en un servidor. 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+    entry: './src/index.js', // Donde parte la compilación
+    output: {
+        path: path.resolve(__dirname, 'dist'), // donde va a publicar lo compilado. En este caso creando una carpeta llamada dist (es por convención ese nombre el mas usado. Puede ser build y otros tmb)
+        filename: 'bundle.js',
+    },
+    mode: 'development',
+    resolve: {
+        extensions: ['.js','.jsx']
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader'
+                }
+            },
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: 'html-loader'
+                    }
+                ]
+            }
+        ]
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './public/index.html',
+            filename: '/index.html'
+        })
+    ]
+}
+
+---------------------------------------------------------------
+
+Cambios en tiempo real con webpack usando webpack-dev-server
+
+1- Agrego los scripts necesarios a mi package.json: 
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve --open",
+    "build": "webpack --mode production"
+  },
+
+Instalo luego estas dependencias de desarrollo: 
+
+  "devDependencies": {
+    "css-loader": "^6.2.0",
+    "mini-css-extract-plugin": "^2.2.0",
+    "sass": "^1.38.0",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.2.1"
+  }
+
+2- Verifico que mis archivos creados estén ok...
+Algunos ejemplos a verificar: 
+A- Estoy importando en mi entry point (index.js) mi componente de react (App.jsx)? Si no es así debo hacerlo. 
+B- Tengo en index.html alguna estructura basica para comenzar? Sino puedo crearla con el shorcut html:5
+
+3- El HTML tiene que tener un elemento, una div por ejemplo, con id o class que nos permite luego trabajarlo en nuestro archivo App.jsx (react)
+
+---------------------------------------------------------------
+
+React con CSS y Sass:
+
+Si aún no lo hicimos vamos a instalar los plugins y loaders que nos permitan compilar archivos css y sass. 
+
+λ npm install css-loader mini-css-extract-plugin sass sass-loader style-loader -D
+
+Luego editamos nuestra config en el archivo de webpack.config.js así: 
+
+const path = require('path'); // Nos permite saber donde se está inicializando nuestro proyecto. En nuestra compu, en nuestra notebook, en la compu de un amigo, en un servidor. 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+
+module.exports = {
+    entry: './src/index.js', // Donde parte la compilación
+    output: {
+        path: path.resolve(__dirname, 'dist'), // donde va a publicar lo compilado. En este caso creando una carpeta llamada dist (es por convención ese nombre el mas usado. Puede ser build y otros tmb)
+        filename: 'bundle.js',
+    },
+    mode: 'development',
+    resolve: {
+        extensions: ['.js','.jsx']
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader'
+                }
+            },
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: 'html-loader'
+                    }
+                ]
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    "style-loader",
+                    "css-loader",
+                    "sass-loader",
+                ]
+            }
+        ]
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './public/index.html',
+            filename: './index.html'
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].css'
+        })
+    ],
+    devServer: {
+        static: {
+            directory: path.join(__dirname, 'dist'),
+            watch: true
+        },
+        watchFiles: path.join(__dirname, "./**"), 
+        compress: true,
+        historyApiFallback: true,
+        port: 3006,
+        open: true, 
+    },
+}
+
+---------------------------------------------------------------
+
+Quiz:
+
+1. Ya tienes tu loader de Babel instalado y conectado con Webpack. ¿Dónde defines los presets con los que vas a trabajar?
+.babelrc
+
+2.
+¿Cuál es el archivo de configuración donde definimos los loaders con los que trabajaremos cada distinto tipo de archivo en nuestro proyecto?
+webpack.config.js
+
+3.
+¿Cuál es el loader de Webpack necesario para trabajar con código JavaScript interpretado por Babel?
+babel-loader
+REPASAR CLASE
+
+4.
+¿Cuál es el comando correcto para trabajar con la versión 17 de React y React DOM.
+npm install react@17 react-dom@17 --save
+
+5.
+¿Cuál es el comando correcto para instalar la última versión de React y React DOM.
+npm install react react-dom --save
+
+
 

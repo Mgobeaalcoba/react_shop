@@ -1,11 +1,10 @@
 import React from 'react';
+import '../styles/global.scss';
 
 const App = () => {
-    return (
-        <div>
-            <h1>Hola Mundo!</h1>
-        </div>
-    );
-};
+	return (
+		<h1>Hola Mundo, Esto es una prueba de Mariano!</h1>
+	);
+}
 
 export default App;
